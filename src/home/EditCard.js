@@ -35,7 +35,7 @@ export default function EditCard() {
   }
   
   function handleClick(){
-     history.push("/decks/:deckId")
+     history.push(`/decks/${deckId}`)
   }
   function handleSubmit(event){
     event.preventDefault()
