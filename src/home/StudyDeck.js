@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import {Link, useParams} from 'react-router-dom'
 import {readDeck} from ".././utils/api"
+import {readCard} from ".././utils/api"
+import ViewCard from "./ViewCard"
 
 export default function StudyDeck() {
   
-  const { deckId } = useParams()
+  const { deckId, cardId } = useParams()
+  console.log("CardId", cardId)
   
  const [currentDeck, setCurrentDeck] = useState({})
+//  const [cards, setCards] =useState("")
+ const [flippedCard, setFlippedCard] =useState(false)
    
    useEffect(() => {
         async function loadDeck() {
@@ -18,20 +23,32 @@ export default function StudyDeck() {
             }
         }
         loadDeck(); 
+        console.log("currentDeck" , currentDeck)
         return () => {
         };
     }, [deckId])
-  
+
+    // const loadCard = readCard(cardId)
+    // console.log("loadCard" , loadCard)
+
+
+    
+    const cards = currentDeck.cards
+
+    cards.map((card) => <ViewCard key={id}/>)
+    
+
+
+    console.log("currentDeck Outside" , currentDeck.cards)
   return (
     <main>
       <ol className="breadcrumb">
           <li className="breadcrumb-item">
-              <Link to="/">Home</Link>
+             {/* <Link to="/">Home</Link> */} 
           </li>
           <li className="breadcrumb-item active">Rendering In React / Study</li>
         </ol>
-      <h4>{currentDeck.name}</h4>
-
+      <div className="card"></div>
      </main>
   )
 }
