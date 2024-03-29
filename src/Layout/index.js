@@ -12,14 +12,13 @@ import { Route, Switch } from "react-router-dom";
 function Layout() {
   return (
     <main>
-     
       <div className="container">
         <Switch>
         <Route exact path="/" component={Home} />      
         {/* TODO: Implement the screen starting here */}
         <Route exact path="/decks/new" component={CreateDeck} />
         <Route exact path="/decks/:deckId/study" component={StudyDeck} />
-        <Route exact path ="/decks/:deckId" component={Deck} />
+        <Route exact path="/decks/:deckId" component={Deck} />
         <Route exact path="/decks/:deckId/edit" component={EditDeck} />
         <Route exact path="/decks/:deckId/cards/new" component={AddCard} />
         <Route exact path="/decks/:deckId/cards/:cardId/edit" component={EditCard} />

@@ -30,12 +30,9 @@ export default function StudyDeck() {
 
     // const loadCard = readCard(cardId)
     // console.log("loadCard" , loadCard)
-
-
-    
     const cards = currentDeck.cards
 
-    cards.map((card) => <ViewCard key={id}/>)
+    cards.map((card) => <ViewCard key={cardId}/>)
     
 
 
