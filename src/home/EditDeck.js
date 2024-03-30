@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { readDeck } from ".././utils/api";
+import { readDeck, updateDeck } from ".././utils/api";
 import { Link, useHistory, useParams } from "react-router-dom";
 
 export default function EditDeck() {
@@ -48,7 +48,7 @@ export default function EditDeck() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    setCurrentDeck(event)
+    updateDeck(currentDeck)
   }
 
   return (
