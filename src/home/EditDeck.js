@@ -49,7 +49,7 @@ export default function EditDeck() {
     event.preventDefault();
     // const abortController = new AbortController();
 
-    const response = await updateDeck(...currentDeck, abortController.signal)
+    const response = await updateDeck(...currentDeck, formData)
     history.push(`/decks/${deckId}`)
     return response
   }
