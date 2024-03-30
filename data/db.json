@@ -54,6 +54,12 @@
       "back": "nnkndk",
       "deckId": 1,
       "id": 8
+    },
+    {
+      "front": "yup",
+      "back": "hello",
+      "deckId": 1,
+      "id": 9
     }
   ]
 }

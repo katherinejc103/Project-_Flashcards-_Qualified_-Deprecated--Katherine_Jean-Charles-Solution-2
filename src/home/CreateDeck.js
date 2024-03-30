@@ -1,9 +1,15 @@
 import React, {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
+import { createDeck } from ".././utils/api";
 
 function CreateDeck(){
   
-  const [formData, setFormData] = useState("")
+  const [formData, setFormData] = useState({
+    name: "",
+    description: ""
+  })
+
+  const [newDeck, setNewDeck] = useState({})
   const history = useHistory();
   
   function handleChange(event){
@@ -19,8 +25,11 @@ function CreateDeck(){
   }
 
   
-  function handleSubmit(event){
+  async function handleSubmit(event){
     event.preventDefault()
+    const response = await createDeck(formData)
+    history.push("/")
+    return response
   }
   
   return (

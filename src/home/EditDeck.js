@@ -76,6 +76,7 @@ export default function EditDeck() {
         />
         <br />
         <label htmlFor="description">Description</label>
+        <br />
         <textarea
           rows="4"
           cols="50"
