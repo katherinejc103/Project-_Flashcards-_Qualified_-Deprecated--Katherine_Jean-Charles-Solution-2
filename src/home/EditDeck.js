@@ -47,6 +47,8 @@ export default function EditDeck() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    setCurrentDeck(event)
   }
 
   return (
