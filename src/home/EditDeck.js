@@ -13,13 +13,13 @@ export default function EditDeck() {
   const [currentDeck, setCurrentDeck] = useState({});
 
   const history = useHistory();
-
+  const abortController = new AbortController();
   useEffect(() => {
     async function loadDeck() {
       
       try {
         const deck = await readDeck(deckId);
-        const abortController = new AbortController();
+        // const abortController = new AbortController();
         setCurrentDeck(deck);
         setFormData({
           ...formData,
