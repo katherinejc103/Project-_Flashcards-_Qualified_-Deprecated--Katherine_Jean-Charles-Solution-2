@@ -58,8 +58,3 @@ export default function ViewCard({ deck }) {
     </div>
   );
 }
-
-//   return( <>
-//   {/* {card.front} */}
-//   </>)
-// }
