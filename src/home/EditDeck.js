@@ -4,7 +4,6 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 export default function EditDeck() {
   const { deckId } = useParams();
-  const abortController = new AbortController();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,9 +16,10 @@ export default function EditDeck() {
 
   useEffect(() => {
     async function loadDeck() {
-      //  const abortController = new AbortController();
+      
       try {
         const deck = await readDeck(deckId);
+        const abortController = new AbortController();
         setCurrentDeck(deck);
         setFormData({
           ...formData,
@@ -45,10 +45,13 @@ export default function EditDeck() {
     history.push(`/decks/${deckId}`);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    // const abortController = new AbortController();
 
-    updateDeck(currentDeck)
+    const response = await updateDeck(...currentDeck, abortController.signal)
+    history.push(`/decks/${deckId}`)
+    return response
   }
 
   return (

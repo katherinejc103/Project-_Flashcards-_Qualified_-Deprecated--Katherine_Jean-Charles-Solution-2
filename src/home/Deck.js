@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { NavLink, useParams, useHistory } from "react-router-dom";
 import { readDeck } from ".././utils/api";
 
 export default function Deck() {
@@ -44,12 +44,26 @@ export default function Deck() {
 
   return (
     <div>
-      <ol className="breadcrumb">
+      <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <a href="/">Home</a>
+            </li>
+            <li className="breadcrumb-item">
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+            React Router
+            </li>
+          </ol>
+        </nav>
+        
+      {/* <ol className="breadcrumb">
         <li className="breadcrumb-item">
           <Link to="/">Home</Link>
         </li>
         <li className="breadcrumb-item active">React Router</li>
-      </ol>
+      </ol> */}
       <div>
         <h4>{currentDeck.name}</h4>
         <p>{currentDeck.description}</p>
