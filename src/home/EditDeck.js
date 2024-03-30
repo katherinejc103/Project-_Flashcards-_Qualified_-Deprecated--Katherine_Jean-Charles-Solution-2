@@ -32,9 +32,7 @@ export default function EditDeck() {
             }
         }
         loadDeck(); 
-        return () => {
-          AbortController.abort()
-        };
+        return () => abortController.abort();
     }, [deckId])
 
    function handleChange(event){

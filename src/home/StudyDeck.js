@@ -1,70 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { readDeck } from ".././utils/api";
-import { readCard } from ".././utils/api";
-import ViewCard from "./ViewCard";
 
-export default function StudyDeck() {
-  const { deckId, cardId } = useParams();
-  console.log("CardId", cardId);
+import React, { useEffect, useState } from "react";
+import {
+  NavLink,
+  useParams,
+} from "react-router-dom";
+import { readDeck } from "../utils/api";
+import ViewCard from "./ViewCard"
 
-  const [currentDeck, setCurrentDeck] = useState({ cards: [] });
-  const [currentCard, setCurrentCard] = useState("0");
-  const [flippedCard, setFlippedCard] = useState(false);
+function StudyDeck() {
+    const { deckId } = useParams();
+    const [ deck, setDeck ] = useState(""); 
+    
+    useEffect(() => {       
+        // "deckId" dependency means this runs each time a new deck is selected
+        const abortController = new AbortController();
+        readDeck(deckId, abortController.signal)   
+         // calls "readDeck" api (promise)
+            .then(setDeck)                         
+             // sets deck state to the result of api promise
+        
+        return () => abortController.abort()
+    },[deckId])
 
-  useEffect(() => {
-    async function loadDeck() {
-      const abortController = new AbortController();
-      try {
-        const response = await readDeck(deckId, abortController.signal);
-        console.log("Response", response);
-        setCurrentDeck(response);
-      } catch (error) {
-        console.error("Error loading deck:", error);
-      }
+    if (deck) {
+        return (
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><a href="/">Home</a></li>
+                    <li className="breadcrumb-item"><NavLink to={`/decks/${deckId}`}>{deck.name}</NavLink></li>
+                    <li className="breadcrumb-item active" aria-current="page">Study</li>
+                </ol>
+            </nav>
+            <h1>{deck.name}: Study</h1>
+            <ViewCard deck={deck}/>
+        </div>
+    )
+        } else {
+            return <h3>Loading...</h3>
+        }
     }
-    loadDeck();
-    console.log("currentDeck", currentDeck);
-    return () => {
-      AbortController.abort();
-    };
-  }, [deckId]);
-
-  const cards = currentDeck.cards;
-
-  setCurrentCard
-  //  const mappedCards = cards.map((card) => <ViewCard key={card.id} card={card.front}/>
-  //  )
-
-  //  console.log("mappedCards" , mappedCards)
-
-  // function flipCard(){
-  //   if (flippedCard.front === true ){
-  //     setFlippedCard(card.front)
-  //   } else {
-  //     setFlippedCard(card.back)
-  //   }
-  // }
-
-  // function showNextButton(){
-  //   if (flippedCard.front === false){
-  //     return (<button
-  //               onClick={() => nextCard(index + 1, cards.length)}
-  //               className="btn btn-primary mx-1">
-  //         Next</button>)
-  //   }
-  // }
-
-  console.log("currentDeck Outside", currentDeck.cards);
-  return (
-    <main>
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">{/* <Link to="/">Home</Link> */}</li>
-        <li className="breadcrumb-item active">Rendering In React / Study</li>
-      </ol>
-      <div className="card">
-        <ViewCard card={card} />
-      </div>
-    </main>
-  );
-}
+export default StudyDeck

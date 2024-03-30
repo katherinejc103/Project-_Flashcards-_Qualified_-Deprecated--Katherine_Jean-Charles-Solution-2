@@ -18,9 +18,7 @@ export default function Deck() {
             }
         }
         loadDeck(); 
-        return () => {
-          AbortController.abort()
-        };
+        return () => abortController.abort();
     }, [deckId])
 
   
