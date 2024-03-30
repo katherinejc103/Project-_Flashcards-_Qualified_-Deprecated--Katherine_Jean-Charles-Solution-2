@@ -1,31 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { readCard } from ".././utils/api";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+// import { readCard } from ".././utils/api";
 
 export default function ViewCard({ deck }) {
-  // console.log(card)
-  // const {cardId} = useParams()
-  //   console.log(cardId);
-
-  //   useEffect(() => {
-  //     async function getCard() {
-  //       try {
-  //         const card = await readCard(cardId);
-  //         console.log(card);
-  //       } catch (error) {
-  //         console.error("Error loading card:", error);
-  //       }
-  //     }
-  //     getCard();
-  //     return () => {};
-  //   }, [cardId]);
   const [cardSide, setCardSide] = useState(true);
   const [index, setIndex] = useState(0);
   const history = useHistory();
 
   const handleNext = () => {
     if (index !== deck.cards.length - 1) {
-      setIndex(index + 1)
+      setIndex(index + 1);
       setCardSide(true);
     } else {
       const result = window.confirm(
@@ -33,7 +17,7 @@ export default function ViewCard({ deck }) {
       );
       if (result) {
         setIndex(0);
-        setCardSide(true)
+        setCardSide(true);
       } else {
         history.push("/");
       }
@@ -43,7 +27,6 @@ export default function ViewCard({ deck }) {
   const handleFlip = () => {
     setCardSide(!cardSide);
   };
-
 
   return (
     <div className="row">
@@ -58,7 +41,10 @@ export default function ViewCard({ deck }) {
                 {cardSide ? deck?.cards[index].front : deck?.cards[index].back}
               </p>
             </span>
-            <button className="btn btn-secondary my-2 mr-2" onClick={handleFlip}>
+            <button
+              className="btn btn-secondary my-2 mr-2"
+              onClick={handleFlip}
+            >
               Flip
             </button>
             {!cardSide && (

@@ -31,11 +31,11 @@ export default function Deck() {
   function handleClick(event) {
     // Handle different button clicks here
     switch (event.target.name) {
-      case "Edit": history.push(`/decks/${deckId}/edit`)
+      case "Edit": history.push(`/decks/${deckId}/edit`);
         break;
-      case "Study": history.push(`/decks/${deckId}/study`)
+      case "Study": history.push(`/decks/${deckId}/study`);
         break;
-      case "Add Cards": history.push(`/decks/${deckId}/cards/new`)
+      case "Add Cards": history.push(`/decks/${deckId}/cards/new`);
         break;
       default:
         break;
