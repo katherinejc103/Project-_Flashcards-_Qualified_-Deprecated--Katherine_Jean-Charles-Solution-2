@@ -6,10 +6,10 @@ export default function Deck() {
   const { deckId } = useParams();
   
   const [currentDeck, setCurrentDeck] = useState({})
-  
+  const abortController = new AbortController();
      useEffect(() => {
         async function loadDeck() {
-         const abortController = new AbortController();
+        //  const abortController = new AbortController();
             try {
                 const deck = await readDeck(deckId);
                 setCurrentDeck(deck);
