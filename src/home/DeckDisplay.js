@@ -34,8 +34,8 @@ function DeckDisplay({ deck, decks, setDecks }) {
               onClick={() => history.push(`/decks/${id}`)}
             >
               <i
-                className="bi bi-eye"
-                style={{ marginRight: "10px", fontSize: "1.2rem" }}
+                className="bi bi-eye-fill"
+               
               ></i>
               View
             </button>
@@ -57,7 +57,7 @@ function DeckDisplay({ deck, decks, setDecks }) {
               className="btn btn-danger"
               onClick={handleDeleteDeck}
             >
-              <i className="bi bi-trash3" style={{ fontSize: "1.2rem" }}></i>
+              <i class="bi bi-trash3" style={{ fontSize: "1.2rem" }}></i>
             </button>
           </div>
         </div>

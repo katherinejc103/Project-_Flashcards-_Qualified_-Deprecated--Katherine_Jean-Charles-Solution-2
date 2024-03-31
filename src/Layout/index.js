@@ -8,6 +8,7 @@ import EditCard from "../home/EditCard";
 import Home from "../home/Home"
 import CreateDeck from "../home/CreateDeck"
 import { Route, Switch } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 function Layout() {
   return (
