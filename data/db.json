@@ -60,6 +60,12 @@
       "back": "hello",
       "deckId": 1,
       "id": 9
+    },
+    {
+      "front": "",
+      "back": "",
+      "deckId": 1,
+      "id": 10
     }
   ]
 }

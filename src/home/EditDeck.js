@@ -13,8 +13,9 @@ export default function EditDeck() {
   const [currentDeck, setCurrentDeck] = useState({});
 
   const history = useHistory();
-  const abortController = new AbortController();
+  
   useEffect(() => {
+    const abortController = new AbortController()
     async function loadDeck() {
       
       try {
@@ -22,10 +23,10 @@ export default function EditDeck() {
         // const abortController = new AbortController();
         setCurrentDeck(deck);
         setFormData({
-          ...formData,
-          name: deck.name,
-          description: deck.description,
-        });
+          ...deck,
+         name: deck.name,
+         description: deck.description,
+       });  
       } catch (error) {
         console.error("Error loading deck:", error);
       }
@@ -33,6 +34,7 @@ export default function EditDeck() {
     loadDeck();
     return () => abortController.abort();
   }, [deckId]);
+  console.log(formData)
 
   function handleChange(event) {
     setFormData({
@@ -48,8 +50,10 @@ export default function EditDeck() {
   async function handleSubmit(event) {
     event.preventDefault();
     // const abortController = new AbortController();
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-    const response = await updateDeck(...currentDeck, formData)
+    const response = await updateDeck(formData,signal)
     history.push(`/decks/${deckId}`)
     return response
   }
