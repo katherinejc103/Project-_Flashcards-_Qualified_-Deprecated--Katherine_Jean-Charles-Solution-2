@@ -57,7 +57,7 @@ function DeckDisplay({ deck, decks, setDecks }) {
               className="btn btn-danger"
               onClick={handleDeleteDeck}
             >
-              <i class="bi bi-trash3" style={{ fontSize: "1.2rem" }}></i>
+              <i className="bi bi-trash3" style={{ fontSize: "1.2rem" }}></i>
             </button>
           </div>
         </div>
