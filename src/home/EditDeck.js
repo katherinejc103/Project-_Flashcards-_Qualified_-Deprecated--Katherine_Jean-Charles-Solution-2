@@ -34,7 +34,6 @@ export default function EditDeck() {
     loadDeck();
     return () => abortController.abort();
   }, [deckId]);
-  console.log(formData)
 
   function handleChange(event) {
     setFormData({
