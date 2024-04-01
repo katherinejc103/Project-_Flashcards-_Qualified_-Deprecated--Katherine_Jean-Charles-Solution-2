@@ -54,13 +54,6 @@ export default function Deck() {
             </li>
           </ol>
         </nav>
-        
-      {/* <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item active">React Router</li>
-      </ol> */}
       <div>
         <h4>{currentDeck.name}</h4>
         <p>{currentDeck.description}</p>
@@ -74,6 +67,11 @@ export default function Deck() {
           Add Cards
         </button>
       </div>
+      <br />
+      <h4>Cards</h4>
+      {/* <div className="card">
+        {deck.cards}
+      </div> */}
     </div>
   );
 }
