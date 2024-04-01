@@ -1,60 +1,103 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-// import { readCard } from ".././utils/api";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
 
-export default function ViewCard({ deck }) {
-  const [cardSide, setCardSide] = useState(true);
-  const [index, setIndex] = useState(0);
+function ViewCard({ deck }) {
+  // const [deck, setDeck] = useState({cards: [0]});
   const history = useHistory();
+  const { deckId } = useParams();
+  const [count, setCount] = useState(0);
+  // const { cards } = deck;
+  const [cardFront, setCardFront] = useState(true);
+  const [currentCard, setCurrentCard] = useState(deck.cards[0]);
+  const cardList = deck.cards;
 
-  const handleNext = () => {
-    if (index !== deck.cards.length - 1) {
-      setIndex(index + 1);
-      setCardSide(true);
+  useEffect(() => {
+    const abortController = new AbortController();
+    setCurrentCard(cardList[count]);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [cardList, count]);
+
+  // flip button handler card is currently displaying the front
+  const handleFlip = () => {
+    if (cardFront) {
+      setCardFront(false);
     } else {
-      const result = window.confirm(
-        "Restart cards?\n\n\nClick 'cancel to return to the home page."
-      );
-      if (result) {
-        setIndex(0);
-        setCardSide(true);
-      } else {
-        history.push("/");
-      }
+      setCardFront(true);
     }
   };
 
-  const handleFlip = () => {
-    setCardSide(!cardSide);
+  // next button handler
+  const nextButton = () => {
+    if (cardList.length === count + 1) {
+      window.confirm(
+        "Restart cards? Click 'cancel' to return to the home page."
+      )
+        ? setCount(0)
+        : history.push("/");
+    } else {
+      setCount((count) => count + 1);
+      setCardFront(true);
+    }
   };
 
-  return (
-    <div className="row">
-      <div className="col-sm-6">
-        <div className="card">
-          <div className="card-body">
-            <h4 className="study-card-length">
-              Card {index + 1} of {deck?.cards?.length}
-            </h4>
-            <span className="card-buttons d-flex justify-content-between">
-              <p className="card-text my-1">
-                {cardSide ? deck?.cards[index].front : deck?.cards[index].back}
-              </p>
-            </span>
-            <button
-              className="btn btn-secondary my-2 mr-2"
-              onClick={handleFlip}
-            >
-              Flip
-            </button>
-            {!cardSide && (
-              <button className="btn btn-primary" onClick={handleNext}>
-                Next
+  if (cardList.length > 2) {
+    return (
+      <div className="card">
+        <div className="card-body">
+          <div className="card-title">
+            <h5>
+              Card {count + 1} of {cardList.length}
+            </h5>
+
+            <div className="card-text">
+              <p>{cardFront ? cardList[count].front : cardList[count].back}</p>
+
+              <button className="btn btn-secondary" onClick={handleFlip}>
+                Flip
               </button>
-            )}
+
+              {!cardFront ? (
+                <button className="btn btn-primary" onClick={nextButton}>
+                  Next
+                </button>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <div className="card">
+          <div className="card-body">
+            <div className="card-title">
+              <h3>{deck.name}: Study</h3>
+
+              <h5>Not enough cards.</h5>
+
+              <div className="card-text">
+                <p>
+                  You need at least 3 cards to study. There are{" "}
+                  {cardList.length} cards in this deck.
+                </p>
+
+                <Link
+                  to={`/decks/${deckId}/cards/new`}
+                  className="btn btn-primary"
+                >
+                  + Add Cards
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
+
+export default ViewCard;

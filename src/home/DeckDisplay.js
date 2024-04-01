@@ -33,10 +33,7 @@ function DeckDisplay({ deck, decks, setDecks }) {
               className="btn btn-secondary mr-5"
               onClick={() => history.push(`/decks/${id}`)}
             >
-              <i
-                className="bi bi-eye-fill"
-               
-              ></i>
+              <i className="bi bi-eye-fill"></i>
               View
             </button>
             <button

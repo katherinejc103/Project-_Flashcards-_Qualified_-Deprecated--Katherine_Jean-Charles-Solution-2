@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import { readDeck } from "../utils/api";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import ViewCard from "./ViewCard";
+import { readDeck } from "../utils/api";
 
 function StudyDeck() {
-  const { deckId } = useParams();
   const [deck, setDeck] = useState("");
+  const { deckId } = useParams();
 
   useEffect(() => {
-    // "deckId" dependency means this runs each time a new deck is selected
     const abortController = new AbortController();
-    readDeck(deckId, abortController.signal)
-      // calls "readDeck" api (promise)
-      .then(setDeck);
-    // sets deck state to the result of api promise
-
-    return () => abortController.abort();
+    async function getDeck() {
+      const response = await readDeck(deckId, abortController.signal);
+      setDeck(response);
+    }
+    getDeck();
+    return () => {
+      abortController.abort();
+    };
   }, [deckId]);
 
   if (deck) {
@@ -24,17 +25,19 @@ function StudyDeck() {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
+
             <li className="breadcrumb-item">
-              <NavLink to={`/decks/${deckId}`}>{deck.name}</NavLink>
+              <Link to={`/decks/${deckId}`}>{deck.name}</Link>
             </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Study
-            </li>
+
+            <li className="breadcrumb-item active">Study</li>
           </ol>
         </nav>
+
         <h1>{deck.name}: Study</h1>
+
         <ViewCard deck={deck} />
       </div>
     );
@@ -42,4 +45,5 @@ function StudyDeck() {
     return <h3>Loading...</h3>;
   }
 }
+
 export default StudyDeck;
